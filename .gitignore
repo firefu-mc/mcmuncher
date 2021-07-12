@@ -1,0 +1,6 @@
+build/
+dist/
+logs/
+venv-mcmuncher/
+__pycache__/
+mcmuncher.spec
