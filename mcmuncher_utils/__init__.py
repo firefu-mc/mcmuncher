@@ -3,7 +3,7 @@ import os
 
 class PathType(object):
     """
-    This class is from
+    This class is from the answer by "Dan Lenski" at
     https://stackoverflow.com/questions/11415570/directory-path-types-with-argparse
     """
 

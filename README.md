@@ -46,15 +46,21 @@ it.
 ```
 cd Downloads
 ```
-Or supply the full path to the program everytime you run it:
+Or supply the full path to the program every time you run it:
 ```
-Downloads\mcmuncher.exe --options WORLD_DIRECTORY
+Downloads\mcmuncher.exe --options
 ```
 
-Because of the way Minecraft names world directories, it may be easier to
-identify the world directory by running `export` from the in-game world
-settings. Change the saved file's extension from `.mcworld` to `.zip`,
-then extract the zip file.
+You must either pass a `--bedrock` option which will cause the program to
+print a list of all saved worlds in your Minecraft directory, and prompt you
+to select one; or you must pass a `--directory DIRECTORY` option to point
+the program at the directory which contains the Minecraft world.
+
+```
+mcmuncher.exe --bedrock
+# OR
+mcmuncher.exe --directory DIRECTORY
+```
 
 You can trim multiple dimensions at once, by passing the appropriate options.
 
@@ -82,12 +88,12 @@ mcmuncher.exe -h
 
 To trim just the overworld dimension:
 ```
-mcmuncher.exe --keep-overworld path\to\overworld-coords.txt path\to\world-directory
+mcmuncher.exe --bedrock --keep-overworld path\to\overworld-coords.txt
 ```
 
 To trim all 3 dimensions at once:
 ```
-mcmuncher.exe --keep-overworld path\to\overworld-coords.txt --keep-nether path\to\nether-coords.txt --keep-end path\to\end-coords.txt path\to\world-directory
+mcmuncher.exe --bedrock --keep-overworld path\to\overworld-coords.txt --keep-nether path\to\nether-coords.txt --keep-end path\to\end-coords.txt
 ```
 
 To test what would happen without saving the changes to the world directory,
