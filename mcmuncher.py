@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-
-import argparse
 from datetime import datetime
 import os
 from pathlib import Path
@@ -9,44 +7,12 @@ import sys
 import amulet
 import mcfirefu
 from mcfirefu import warn, verbose
-from mcfirefu.pathtype import PathType
-
-__version__ = 2.0
 
 dimensions = {
     "overworld": "minecraft:overworld",
     "nether": "minecraft:the_nether",
     "end":  "minecraft:the_end",
 }
-
-def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--directory", type=PathType(exists=True, type='dir'), metavar='DIR', help="Path to world directory")
-    parser.add_argument("--bedrock", action=argparse.BooleanOptionalAction, help="List Bedrock game worlds, and prompt for selection")
-    parser.add_argument("--keep-overworld", type=argparse.FileType('r', encoding='UTF-8'), metavar="FILE")
-    parser.add_argument("--keep-nether", type=argparse.FileType('r', encoding='UTF-8'), metavar="FILE")
-    parser.add_argument("--keep-end", type=argparse.FileType('r', encoding='UTF-8'), metavar="FILE")
-    parser.add_argument("--dryrun", action=argparse.BooleanOptionalAction, help="Print what would happen, but don't save the changes")
-    parser.add_argument("--verbose", action=argparse.BooleanOptionalAction, help="Print lots of information about which chunks are being selected")
-    parser.add_argument("--version", action="version", version='McMuncher ' + str(__version__))
-    mcfirefu.args = parser.parse_args()
-
-    if not mcfirefu.args.directory and not mcfirefu.args.bedrock:
-        warn("error: Require 1 of --directory=DIR or --bedrock")
-        parser.print_help()
-        sys.exit(1)
-
-    if mcfirefu.args.directory and mcfirefu.args.bedrock:
-        warn("error: Cannot provide both --directory=DIR and --bedrock")
-        parser.print_help()
-        sys.exit(1)
-
-    if not mcfirefu.args.keep_overworld and not mcfirefu.args.keep_nether and not mcfirefu.args.keep_end:
-        warn("error: Require at least 1 of --keep-overworld=FILE, --keep-nether=FILE or --keep-end=FILE options\n")
-        parser.print_help()
-        sys.exit(1)
-
-    return
 
 def get_bedrock_worlds_dir():
     if sys.platform != "win32":
@@ -235,7 +201,7 @@ def trim_chunks(level, dimension, coords_file):
     return
 
 def main():
-    parse_args();
+    mcfirefu.parse_args();
 
     directory = select_directory()
     level = amulet.load_level(directory)
