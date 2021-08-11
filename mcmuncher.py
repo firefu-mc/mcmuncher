@@ -7,7 +7,7 @@ from pathlib import Path
 import re
 import sys
 import amulet
-from mcmuncher_utils import PathType
+from mcfirefu.pathtype import PathType
 
 __version__ = 2.0
 
