@@ -3,7 +3,7 @@ import os
 import sys
 from mcfirefu.pathtype import PathType
 
-__version__ = 2.0
+__version__ = 3.0
 
 args = None
 

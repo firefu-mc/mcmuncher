@@ -98,3 +98,19 @@ mcmuncher.exe --bedrock --keep-overworld path\to\overworld-coords.txt --keep-net
 
 To test what would happen without saving the changes to the world directory,
 add the `--dryrun` option.
+
+## Developers
+
+To update the dependencies / libraries:
+```
+pip list
+# If any packages are flagged as out of date, run the following,
+# replacing NAME as appropriate
+python -m pip install --upgrade NAME
+```
+
+## Running unit tests
+
+```
+python -m unittest
+```

@@ -1,5 +1,6 @@
 build/
 dist/
+local/
 logs/
 venv-mcmuncher/
 __pycache__/
