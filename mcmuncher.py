@@ -7,6 +7,8 @@ from pathlib import Path
 import re
 import sys
 import amulet
+import mcfirefu
+from mcfirefu import warn, verbose
 from mcfirefu.pathtype import PathType
 
 __version__ = 2.0
@@ -17,20 +19,7 @@ dimensions = {
     "end":  "minecraft:the_end",
 }
 
-args = None
-
-def warn(*msg):
-    msg = "".join(map(str, msg))
-
-    sys.stderr.write(msg + os.linesep)
-
-def verbose(*msg):
-    if args.verbose:
-        warn(*msg)
-
 def parse_args() -> argparse.Namespace:
-    global args
-
     parser = argparse.ArgumentParser()
     parser.add_argument("--directory", type=PathType(exists=True, type='dir'), metavar='DIR', help="Path to world directory")
     parser.add_argument("--bedrock", action=argparse.BooleanOptionalAction, help="List Bedrock game worlds, and prompt for selection")
@@ -40,19 +29,19 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--dryrun", action=argparse.BooleanOptionalAction, help="Print what would happen, but don't save the changes")
     parser.add_argument("--verbose", action=argparse.BooleanOptionalAction, help="Print lots of information about which chunks are being selected")
     parser.add_argument("--version", action="version", version='McMuncher ' + str(__version__))
-    args = parser.parse_args()
+    mcfirefu.args = parser.parse_args()
 
-    if not args.directory and not args.bedrock:
+    if not mcfirefu.args.directory and not mcfirefu.args.bedrock:
         warn("error: Require 1 of --directory=DIR or --bedrock")
         parser.print_help()
         sys.exit(1)
 
-    if args.directory and args.bedrock:
+    if mcfirefu.args.directory and mcfirefu.args.bedrock:
         warn("error: Cannot provide both --directory=DIR and --bedrock")
         parser.print_help()
         sys.exit(1)
 
-    if not args.keep_overworld and not args.keep_nether and not args.keep_end:
+    if not mcfirefu.args.keep_overworld and not mcfirefu.args.keep_nether and not mcfirefu.args.keep_end:
         warn("error: Require at least 1 of --keep-overworld=FILE, --keep-nether=FILE or --keep-end=FILE options\n")
         parser.print_help()
         sys.exit(1)
@@ -107,9 +96,9 @@ def select_bedrock_directory():
     return world.path
 
 def select_directory():
-    if args.directory:
-        return args.directory
-    elif args.bedrock:
+    if mcfirefu.args.directory:
+        return mcfirefu.args.directory
+    elif mcfirefu.args.bedrock:
         return select_bedrock_directory()
     else:
         raise Exception("Unknown type of directory to search")
@@ -251,16 +240,16 @@ def main():
     directory = select_directory()
     level = amulet.load_level(directory)
 
-    if args.keep_overworld:
-        trim_chunks(level, "overworld", args.keep_overworld)
+    if mcfirefu.args.keep_overworld:
+        trim_chunks(level, "overworld", mcfirefu.args.keep_overworld)
 
-    if args.keep_nether:
-        trim_chunks(level, "nether", args.keep_nether)
+    if mcfirefu.args.keep_nether:
+        trim_chunks(level, "nether", mcfirefu.args.keep_nether)
 
-    if args.keep_end:
-        trim_chunks(level, "end", args.keep_end)
+    if mcfirefu.args.keep_end:
+        trim_chunks(level, "end", mcfirefu.args.keep_end)
 
-    if args.dryrun:
+    if mcfirefu.args.dryrun:
         warn("Dry Run - not saving changes")
     else:
         level.save()
