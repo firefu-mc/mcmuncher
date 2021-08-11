@@ -2,7 +2,6 @@
 
 import argparse
 from datetime import datetime
-import math
 import os
 from pathlib import Path
 import re
@@ -158,8 +157,8 @@ def convert_coords_to_chunk_coords(coords) -> "[x,z]":
     """
     Converts a block coordinate [x,z] tuple into a chunk coordinate tuple [x,z]
     """
-    x=math.floor(coords[0]/16)
-    z=math.floor(coords[1]/16)
+    x = coords[0] >> 4
+    z = coords[1] >> 4
     return[x,z]
 
 def expand_coord_corners(coords) -> "[[x,z],[x,z],...]":
