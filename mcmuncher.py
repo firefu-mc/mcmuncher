@@ -8,12 +8,6 @@ import mcfirefu.saves
 from mcfirefu import warn, verbose
 from mcfirefu.pathtype import PathType
 
-dimensions = {
-    "overworld": "minecraft:overworld",
-    "nether": "minecraft:the_nether",
-    "end":  "minecraft:the_end",
-}
-
 def key_from_coord_tuple(coords) -> "x,z":
     """
     Returns a string usable as a dict key,
@@ -108,7 +102,6 @@ def convert_coord_list_to_chunk_coords(coord_corners):
 
 def trim_chunks(level, dimension, coords_file):
     warn("Dimension: ", dimension)
-    dimension = dimensions[dimension]
     coords_from_file = get_coords_from_file(coords_file)
 
     verbose("Coords from file\n", coords_from_file)
@@ -152,13 +145,13 @@ def main():
     level = amulet.load_level(directory)
 
     if mcfirefu.args.keep_overworld:
-        trim_chunks(level, "overworld", mcfirefu.args.keep_overworld)
+        trim_chunks(level, "minecraft:overworld", mcfirefu.args.keep_overworld)
 
     if mcfirefu.args.keep_nether:
-        trim_chunks(level, "nether", mcfirefu.args.keep_nether)
+        trim_chunks(level, "minecraft:the_nether", mcfirefu.args.keep_nether)
 
     if mcfirefu.args.keep_end:
-        trim_chunks(level, "end", mcfirefu.args.keep_end)
+        trim_chunks(level, "minecraft:the_end", mcfirefu.args.keep_end)
 
     if mcfirefu.args.dryrun:
         warn("Dry Run - not saving changes")
