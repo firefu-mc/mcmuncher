@@ -69,7 +69,7 @@ def __trim_chunks(level, dimension, coords_file):
 def run():
     __validate_args()
 
-    directory = mcfirefu.saves.select_directory()
+    directory = mcfirefu.saves.select_directory(mcfirefu.args.directory, mcfirefu.args.bedrock)
     level = amulet.load_level(directory)
 
     if mcfirefu.args.keep_overworld:

@@ -52,10 +52,10 @@ def select_bedrock_directory():
 
     return world.path
 
-def select_directory():
-    if mcfirefu.args.directory:
-        return mcfirefu.args.directory
-    elif mcfirefu.args.bedrock:
+def select_directory(directory, bedrock):
+    if directory:
+        return directory
+    elif bedrock:
         return select_bedrock_directory()
     else:
         raise Exception("Unknown type of directory to search")
