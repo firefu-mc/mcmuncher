@@ -48,7 +48,7 @@ cd Downloads
 ```
 Or supply the full path to the program every time you run it:
 ```
-Downloads\mcmuncher.exe --options
+Downloads\mcmuncher.exe trim-chunks --options
 ```
 
 You must either pass a `--bedrock` option which will cause the program to
@@ -57,9 +57,9 @@ to select one; or you must pass a `--directory DIRECTORY` option to point
 the program at the directory which contains the Minecraft world.
 
 ```
-mcmuncher.exe --bedrock
+mcmuncher.exe trim-chunks --bedrock
 # OR
-mcmuncher.exe --directory DIRECTORY
+mcmuncher.exe trim-chunks --directory DIRECTORY
 ```
 
 You can trim multiple dimensions at once, by passing the appropriate options.
@@ -83,17 +83,17 @@ An example of a text file:
 
 To see all available options, run:
 ```
-mcmuncher.exe -h
+mcmuncher.exe trim-chunks -h
 ```
 
 To trim just the overworld dimension:
 ```
-mcmuncher.exe --bedrock --keep-overworld path\to\overworld-coords.txt
+mcmuncher.exe trim-chunks --bedrock --keep-overworld path\to\overworld-coords.txt
 ```
 
 To trim all 3 dimensions at once:
 ```
-mcmuncher.exe --bedrock --keep-overworld path\to\overworld-coords.txt --keep-nether path\to\nether-coords.txt --keep-end path\to\end-coords.txt
+mcmuncher.exe trim-chunks --bedrock --keep-overworld path\to\overworld-coords.txt --keep-nether path\to\nether-coords.txt --keep-end path\to\end-coords.txt
 ```
 
 To test what would happen without saving the changes to the world directory,
