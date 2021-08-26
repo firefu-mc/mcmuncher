@@ -4,11 +4,13 @@ import setuptools
 import sys
 import mcfirefu
 import mcfirefu.submodule.trim_chunks
+import mcfirefu.submodule.view_stats
 
 __version__ = 4.0
 
 submodules = {
     "trim-chunks": mcfirefu.submodule.trim_chunks,
+    "view-stats": mcfirefu.submodule.view_stats,
 }
 
 def main():

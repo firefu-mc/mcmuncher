@@ -8,7 +8,7 @@ from mcfirefu import warn, verbose
 from mcfirefu.pathtype import PathType
 
 def get_help():
-    return "Trim chunks from world dimensions - deleting any chunks you don't want."
+    return "Command to trim chunks from world dimensions - deleting any chunks you don't want."
 
 def add_arguments(parser):
     world = parser.add_mutually_exclusive_group(required=True)
