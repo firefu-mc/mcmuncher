@@ -15,6 +15,12 @@ Command to trim chunks from world dimensions - deleting any chunks you don't wan
 
 See [docs/trim-chunks.md](docs/trim-chunks.md) for details.
 
+## copy-dimensions
+
+Command to copy dimensions from 1 world to another.
+
+See [docs/copy-dimensions.md](docs/copy-dimensions.md) for details.
+
 ## view-stats
 
 Command to view a report of various details about a world.

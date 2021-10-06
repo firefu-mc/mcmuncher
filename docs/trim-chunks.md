@@ -4,6 +4,8 @@ Command to trim chunks from world dimensions - deleting any chunks you don't wan
 
 ## Usage
 
+Always backup your Minecraft world directories first!
+
 You must either pass a `--bedrock` option which will cause the program to
 print a list of all saved worlds in your Minecraft directory, and prompt you
 to select one; or you must pass a `--directory DIRECTORY` option to point
