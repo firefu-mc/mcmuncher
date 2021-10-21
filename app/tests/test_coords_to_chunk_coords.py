@@ -1,5 +1,5 @@
 import unittest
-import mcfirefu.coord_utils
+import app.coord_utils
 
 # These were manually verified using
 # https://minecraft.tools/en/coordinate-calculator.php
@@ -29,7 +29,7 @@ class TestCoordsToChunkCoords(unittest.TestCase):
     def test_convert_coords_to_chunk_coords(self):
         for pair in coords:
             print(pair)
-            chunk = mcfirefu.coord_utils.convert_coords_to_chunk_coords([pair[0], pair[0]])
+            chunk = app.coord_utils.convert_coords_to_chunk_coords([pair[0], pair[0]])
             self.assertEqual(chunk, [pair[1],pair[1]])
 
 if __name__ == '__main__':

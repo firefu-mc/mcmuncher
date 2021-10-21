@@ -1,11 +1,11 @@
 import amulet
 import argparse
 import sys
-import mcfirefu
-import mcfirefu.saves
-import mcfirefu.chunk_utils
-from mcfirefu import warn
-from mcfirefu.pathtype import PathType
+import app
+import app.saves
+import app.chunk_utils
+from app import warn
+from app.pathtype import PathType
 
 def get_help():
     return "Command to copy dimensions from 1 world to another."
@@ -36,7 +36,7 @@ def add_arguments(parser):
     return
 
 def __validate_args():
-    if not mcfirefu.args.replace_overworld and not mcfirefu.args.merge_overworld and not mcfirefu.args.replace_nether and not mcfirefu.args.merge_nether and not mcfirefu.args.replace_end and not mcfirefu.args.merge_nether:
+    if not app.args.replace_overworld and not app.args.merge_overworld and not app.args.replace_nether and not app.args.merge_nether and not app.args.replace_end and not app.args.merge_nether:
         warn("error: Require at least 1 of --replace-overworld, --merge-overworld, --replace-nether, --merge-nether, --replace-end or --merge-end options\n")
         parser.print_help()
         sys.exit(1)
@@ -45,27 +45,27 @@ def __validate_args():
 def run():
     __validate_args()
 
-    source_directory = mcfirefu.saves.select_directory(mcfirefu.args.source_directory, mcfirefu.args.source_bedrock, "Enter the number of the source world")
-    target_directory = mcfirefu.saves.select_directory(mcfirefu.args.target_directory, mcfirefu.args.target_bedrock, "Enter the number of the target world")
+    source_directory = app.saves.select_directory(app.args.source_directory, app.args.source_bedrock, "Enter the number of the source world")
+    target_directory = app.saves.select_directory(app.args.target_directory, app.args.target_bedrock, "Enter the number of the target world")
     source_level = amulet.load_level(source_directory)
     target_level = amulet.load_level(target_directory)
 
-    if mcfirefu.args.replace_overworld:
-        mcfirefu.chunk_utils.replace_dimension(source_level, target_level, "minecraft:overworld")
-    elif mcfirefu.args.merge_overworld:
-        mcfirefu.chunk_utils.merge_dimension(source_level, target_level, "minecraft:overworld")
+    if app.args.replace_overworld:
+        app.chunk_utils.replace_dimension(source_level, target_level, "minecraft:overworld")
+    elif app.args.merge_overworld:
+        app.chunk_utils.merge_dimension(source_level, target_level, "minecraft:overworld")
 
-    if mcfirefu.args.replace_nether:
-        mcfirefu.chunk_utils.replace_dimension(source_level, target_level, "minecraft:the_nether")
-    elif mcfirefu.args.merge_nether:
-        mcfirefu.chunk_utils.merge_dimension(source_level, target_level, "minecraft:the_nether")
+    if app.args.replace_nether:
+        app.chunk_utils.replace_dimension(source_level, target_level, "minecraft:the_nether")
+    elif app.args.merge_nether:
+        app.chunk_utils.merge_dimension(source_level, target_level, "minecraft:the_nether")
 
-    if mcfirefu.args.replace_end:
-        mcfirefu.chunk_utils.replace_dimension(source_level, target_level, "minecraft:the_end")
-    elif mcfirefu.args.merge_end:
-        mcfirefu.chunk_utils.merge_dimension(source_level, target_level, "minecraft:the_end")
+    if app.args.replace_end:
+        app.chunk_utils.replace_dimension(source_level, target_level, "minecraft:the_end")
+    elif app.args.merge_end:
+        app.chunk_utils.merge_dimension(source_level, target_level, "minecraft:the_end")
 
-    if mcfirefu.args.dryrun:
+    if app.args.dryrun:
         warn("Dry Run - not saving changes")
     else:
         target_level.save()

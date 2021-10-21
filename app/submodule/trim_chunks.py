@@ -1,11 +1,11 @@
 import amulet
 import argparse
 import sys
-import mcfirefu
-import mcfirefu.saves
-import mcfirefu.coord_utils
-from mcfirefu import warn, verbose
-from mcfirefu.pathtype import PathType
+import app
+import app.saves
+import app.coord_utils
+from app import warn, verbose
+from app.pathtype import PathType
 
 def get_help():
     return "Command to trim chunks from world dimensions - deleting any chunks you don't want."
@@ -23,7 +23,7 @@ def add_arguments(parser):
     return
 
 def __validate_args():
-    if not mcfirefu.args.keep_overworld and not mcfirefu.args.keep_nether and not mcfirefu.args.keep_end:
+    if not app.args.keep_overworld and not app.args.keep_nether and not app.args.keep_end:
         warn("error: Require at least 1 of --keep-overworld=FILE, --keep-nether=FILE or --keep-end=FILE options\n")
         parser.print_help()
         sys.exit(1)
@@ -31,11 +31,11 @@ def __validate_args():
 
 def __trim_chunks(level, dimension, coords_file):
     warn("Dimension: ", dimension)
-    coords_from_file = mcfirefu.coord_utils.get_coords_from_file(coords_file)
+    coords_from_file = app.coord_utils.get_coords_from_file(coords_file)
 
     verbose("Coords from file\n", coords_from_file)
 
-    keep_chunks = mcfirefu.coord_utils.convert_coord_list_to_chunk_coords(coords_from_file)
+    keep_chunks = app.coord_utils.convert_coord_list_to_chunk_coords(coords_from_file)
 
     verbose("Max possible number of chunks to keep: ", len(keep_chunks))
 
@@ -46,12 +46,12 @@ def __trim_chunks(level, dimension, coords_file):
     # dict of world chunks keyed on stringified coords
     world_chunks = dict()
     for i in world_chunks_list:
-        world_chunks.update({mcfirefu.coord_utils.key_from_coord_tuple(i): i})
+        world_chunks.update({app.coord_utils.key_from_coord_tuple(i): i})
 
     warn("Number of chunks in world file: ", len(world_chunks))
 
     for i in keep_chunks:
-        world_chunks.pop(mcfirefu.coord_utils.key_from_coord_tuple(i), None)
+        world_chunks.pop(app.coord_utils.key_from_coord_tuple(i), None)
 
     # everything remaining in dict needs to be deleted
     verbose("Going to delete number of chunks: ", len(world_chunks))
@@ -69,19 +69,19 @@ def __trim_chunks(level, dimension, coords_file):
 def run():
     __validate_args()
 
-    directory = mcfirefu.saves.select_directory(mcfirefu.args.directory, mcfirefu.args.bedrock)
+    directory = app.saves.select_directory(app.args.directory, app.args.bedrock)
     level = amulet.load_level(directory)
 
-    if mcfirefu.args.keep_overworld:
-        __trim_chunks(level, "minecraft:overworld", mcfirefu.args.keep_overworld)
+    if app.args.keep_overworld:
+        __trim_chunks(level, "minecraft:overworld", app.args.keep_overworld)
 
-    if mcfirefu.args.keep_nether:
-        __trim_chunks(level, "minecraft:the_nether", mcfirefu.args.keep_nether)
+    if app.args.keep_nether:
+        __trim_chunks(level, "minecraft:the_nether", app.args.keep_nether)
 
-    if mcfirefu.args.keep_end:
-        __trim_chunks(level, "minecraft:the_end", mcfirefu.args.keep_end)
+    if app.args.keep_end:
+        __trim_chunks(level, "minecraft:the_end", app.args.keep_end)
 
-    if mcfirefu.args.dryrun:
+    if app.args.dryrun:
         warn("Dry Run - not saving changes")
     else:
         level.save()

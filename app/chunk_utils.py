@@ -1,4 +1,4 @@
-from mcfirefu import warn, verbose
+from app import warn, verbose
 
 def delete_dimension(level, dimension):
     world_chunks_list = level.all_chunk_coords(dimension)

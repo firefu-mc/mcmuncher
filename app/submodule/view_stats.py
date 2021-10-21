@@ -2,10 +2,10 @@ import amulet
 import amulet.utils.world_utils
 import argparse
 import sys
-import mcfirefu
-import mcfirefu.saves
-from mcfirefu import warn
-from mcfirefu.pathtype import PathType
+import app
+import app.saves
+from app import warn
+from app.pathtype import PathType
 
 def get_help():
     return "Command to view various details about a world."
@@ -63,14 +63,14 @@ def __view_stats(level):
         warn(i)
         world_chunks_list = level.all_chunk_coords(i)
         warn("%d chunks" % (len(world_chunks_list)))
-        if mcfirefu.args.extent:
+        if app.args.extent:
             __report_max_chunks(world_chunks_list)
-        if mcfirefu.args.bounds:
+        if app.args.bounds:
             bounds = level.bounds(i)
             warn("bounds: %s" % bounds)
         warn("")
 
-    if mcfirefu.args.players:
+    if app.args.players:
         players = level.all_player_ids()
         warn("Players:")
         warn(players)
@@ -91,7 +91,7 @@ def __view_stats(level):
     return
 
 def run():
-    directory = mcfirefu.saves.select_directory(mcfirefu.args.directory, mcfirefu.args.bedrock)
+    directory = app.saves.select_directory(app.args.directory, app.args.bedrock)
     level = amulet.load_level(directory)
 
     __view_stats(level)

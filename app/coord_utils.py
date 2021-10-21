@@ -1,6 +1,6 @@
 import re
 import sys
-from mcfirefu import warn, verbose
+from app import warn, verbose
 
 def key_from_coord_tuple(coords) -> "x,z":
     """

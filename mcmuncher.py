@@ -2,17 +2,17 @@
 import argparse
 import setuptools
 import sys
-import mcfirefu
-import mcfirefu.submodule.trim_chunks
-import mcfirefu.submodule.copy_dimensions
-import mcfirefu.submodule.view_stats
+import app
+import app.submodule.trim_chunks
+import app.submodule.copy_dimensions
+import app.submodule.view_stats
 
 __version__ = 4.0
 
 submodules = {
-    "trim-chunks": mcfirefu.submodule.trim_chunks,
-    "copy-dimensions": mcfirefu.submodule.copy_dimensions,
-    "view-stats": mcfirefu.submodule.view_stats,
+    "trim-chunks": app.submodule.trim_chunks,
+    "copy-dimensions": app.submodule.copy_dimensions,
+    "view-stats": app.submodule.view_stats,
 }
 
 def main():
@@ -24,9 +24,9 @@ def main():
         subparser = subparsers.add_parser(i, help=submodules[i].get_help())
         submodules[i].add_arguments(subparser)
 
-    mcfirefu.args = parser.parse_args()
+    app.args = parser.parse_args()
 
-    subcommand = mcfirefu.args.subcommand
+    subcommand = app.args.subcommand
     if subcommand in submodules:
         submodules[subcommand].run()
 
