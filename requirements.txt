@@ -1,4 +1,4 @@
-amulet-core==1.4.6
+amulet-core==1.4.8
 amulet-nbt==1.0.3.10
 numpy==1.21.1
 PyMCTranslate==1.0.7
