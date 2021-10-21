@@ -19,6 +19,20 @@ mcmuncher.exe trim-chunks --directory DIRECTORY
 
 You can trim multiple dimensions at once, by passing the appropriate options.
 
+`--keep-overworld FILE` Specify which chunks to keep.
+
+`--wipe-overworld` Delete entire dimension.
+
+`--keep-nether FILE` Specify which chunks to keep.
+
+`--wipe-nether` Delete entire dimension.
+
+`--keep-end FILE` Specify which chunks to keep.
+
+`--wipe-end` Delete entire dimension.
+
+The `--keep-X` and `--wipe-X` options for a single dimension are mutually exclusive.
+
 You record which chunks to keep for each dimensions in a separate text file.
 Any chunks not in that text file will be deleted from the world.
 
@@ -44,6 +58,11 @@ mcmuncher.exe trim-chunks --bedrock --keep-overworld path\to\overworld-coords.tx
 To trim all 3 dimensions at once:
 ```
 mcmuncher.exe trim-chunks --bedrock --keep-overworld path\to\overworld-coords.txt --keep-nether path\to\nether-coords.txt --keep-end path\to\end-coords.txt
+```
+
+To delete all chunks from an entire dimension, pass the appropriate option:
+```
+mcmuncher.exe trim-chunks --bedrock --wipe-overworld
 ```
 
 To test what would happen without saving the changes to the world directory,

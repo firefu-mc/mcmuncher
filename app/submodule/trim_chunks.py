@@ -3,6 +3,7 @@ import argparse
 import sys
 import app
 import app.saves
+import app.chunk_utils
 import app.coord_utils
 from app import warn, verbose
 from app.pathtype import PathType
@@ -15,16 +16,25 @@ def add_arguments(parser):
     world.add_argument("--directory", type=PathType(exists=True, type='dir'), metavar='DIR', help="Path to world directory")
     world.add_argument("--bedrock", action=argparse.BooleanOptionalAction, help="List Bedrock game worlds, and prompt for selection")
 
-    parser.add_argument("--keep-overworld", type=argparse.FileType('r', encoding='UTF-8'), metavar="FILE")
-    parser.add_argument("--keep-nether", type=argparse.FileType('r', encoding='UTF-8'), metavar="FILE")
-    parser.add_argument("--keep-end", type=argparse.FileType('r', encoding='UTF-8'), metavar="FILE")
+    overworld = parser.add_mutually_exclusive_group()
+    overworld.add_argument("--keep-overworld", type=argparse.FileType('r', encoding='UTF-8'), metavar="FILE")
+    overworld.add_argument("--wipe-overworld", action=argparse.BooleanOptionalAction)
+
+    nether = parser.add_mutually_exclusive_group()
+    nether.add_argument("--keep-nether", type=argparse.FileType('r', encoding='UTF-8'), metavar="FILE")
+    nether.add_argument("--wipe-nether", action=argparse.BooleanOptionalAction)
+
+    end = parser.add_mutually_exclusive_group()
+    end.add_argument("--keep-end", type=argparse.FileType('r', encoding='UTF-8'), metavar="FILE")
+    end.add_argument("--wipe-end", action=argparse.BooleanOptionalAction)
+
     parser.add_argument("--dryrun", "--dry-run", action=argparse.BooleanOptionalAction, help="Print what would happen, but don't save the changes")
     parser.add_argument("--verbose", action=argparse.BooleanOptionalAction, help="Print lots of information about which chunks are being selected")
     return
 
 def __validate_args(parser):
-    if not app.args.keep_overworld and not app.args.keep_nether and not app.args.keep_end:
-        warn("error: Require at least 1 of --keep-overworld=FILE, --keep-nether=FILE or --keep-end=FILE options\n")
+    if not app.args.keep_overworld and not app.args.wipe_overworld and not app.args.keep_nether and not app.args.wipe_nether and not app.args.keep_end and not app.args.wipe_end:
+        warn("error: Require at least 1 of --keep-overworld=FILE, --wipe-overworld, --keep-nether=FILE, --wipe-nether, --keep-end=FILE or --wipe-end options\n")
         parser.print_help()
         sys.exit(1)
     return
@@ -74,12 +84,18 @@ def run(parser):
 
     if app.args.keep_overworld:
         __trim_chunks(level, "minecraft:overworld", app.args.keep_overworld)
+    elif app.args.wipe_overworld:
+        app.chunk_utils.delete_dimension(level, "minecraft:overworld")
 
     if app.args.keep_nether:
         __trim_chunks(level, "minecraft:the_nether", app.args.keep_nether)
+    elif app.args.wipe_nether:
+        app.chunk_utils.delete_dimension(level, "minecraft:the_nether")
 
     if app.args.keep_end:
         __trim_chunks(level, "minecraft:the_end", app.args.keep_end)
+    elif app.args.wipe_end:
+        app.chunk_utils.delete_dimension(level, "minecraft:the_end")
 
     if app.args.dryrun:
         warn("Dry Run - not saving changes")
