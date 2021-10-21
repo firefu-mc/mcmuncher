@@ -22,7 +22,7 @@ def add_arguments(parser):
     parser.add_argument("--verbose", action=argparse.BooleanOptionalAction, help="Print lots of information about which chunks are being selected")
     return
 
-def __validate_args():
+def __validate_args(parser):
     if not app.args.keep_overworld and not app.args.keep_nether and not app.args.keep_end:
         warn("error: Require at least 1 of --keep-overworld=FILE, --keep-nether=FILE or --keep-end=FILE options\n")
         parser.print_help()
@@ -66,8 +66,8 @@ def __trim_chunks(level, dimension, coords_file):
     warn("Number of chunks remaining in world: ", len(level.all_chunk_coords(dimension)))
     return
 
-def run():
-    __validate_args()
+def run(parser):
+    __validate_args(parser)
 
     directory = app.saves.select_directory(app.args.directory, app.args.bedrock)
     level = amulet.load_level(directory)

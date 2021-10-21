@@ -19,16 +19,18 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-v", "--version", action="version", version='McMuncher ' + str(__version__))
     subparsers = parser.add_subparsers(dest="subcommand")
+    submodule_parsers = {}
 
     for i in submodules:
         subparser = subparsers.add_parser(i, help=submodules[i].get_help())
+        submodule_parsers[i] = subparser
         submodules[i].add_arguments(subparser)
 
     app.args = parser.parse_args()
 
     subcommand = app.args.subcommand
     if subcommand in submodules:
-        submodules[subcommand].run()
+        submodules[subcommand].run(submodule_parsers[subcommand])
 
     return
 

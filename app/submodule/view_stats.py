@@ -90,7 +90,7 @@ def __view_stats(level):
 
     return
 
-def run():
+def run(parser):
     directory = app.saves.select_directory(app.args.directory, app.args.bedrock)
     level = amulet.load_level(directory)
 

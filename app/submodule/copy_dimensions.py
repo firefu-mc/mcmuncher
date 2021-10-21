@@ -35,15 +35,15 @@ def add_arguments(parser):
     parser.add_argument("--verbose", action=argparse.BooleanOptionalAction, help="Print extra information about what is happening")
     return
 
-def __validate_args():
+def __validate_args(parser):
     if not app.args.replace_overworld and not app.args.merge_overworld and not app.args.replace_nether and not app.args.merge_nether and not app.args.replace_end and not app.args.merge_nether:
         warn("error: Require at least 1 of --replace-overworld, --merge-overworld, --replace-nether, --merge-nether, --replace-end or --merge-end options\n")
         parser.print_help()
         sys.exit(1)
     return
 
-def run():
-    __validate_args()
+def run(parser):
+    __validate_args(parser)
 
     source_directory = app.saves.select_directory(app.args.source_directory, app.args.source_bedrock, "Enter the number of the source world")
     target_directory = app.saves.select_directory(app.args.target_directory, app.args.target_bedrock, "Enter the number of the target world")
