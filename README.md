@@ -70,6 +70,10 @@ venv-mcmuncher\Scripts\pyinstaller.exe --onefile -c -p venv-mcmuncher\Lib\site-p
 
 The `mcmuncher.exe` program will be saved to the `dist` directory.
 
+**Python 3.10 / pyinstaller bug** If you get an error
+`importerror: no module named _bootlocale` add the option
+`--exclude-module _bootlocale` to the `pyinstaller.exe` command above.
+
 # Developers
 
 To update the dependencies / libraries:
